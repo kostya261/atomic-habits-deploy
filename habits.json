@@ -1,0 +1,317 @@
+[
+{
+    "model": "habits.habit",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "place": "Кухня",
+        "time": "08:30:00",
+        "action": "Пить 2 стакана воды",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 45,
+        "is_public": true,
+        "created_at": "2026-02-09T21:30:09.474Z",
+        "updated_at": "2026-02-09T21:33:40.970Z",
+        "last_completed": "2026-02-09T21:32:56.258Z",
+        "streak": 1
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "place": "Диван",
+        "time": "20:00:00",
+        "action": "Посмотреть сериал",
+        "is_pleasant": true,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-09T21:30:33.530Z",
+        "updated_at": "2026-02-09T21:30:33.530Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "place": "Парк",
+        "time": "18:00:00",
+        "action": "Вечерняя пробежка",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "Мороженое",
+        "execution_time": 90,
+        "is_public": false,
+        "created_at": "2026-02-09T21:30:48.375Z",
+        "updated_at": "2026-02-09T21:30:48.375Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 4,
+    "fields": {
+        "user": 1,
+        "place": "Тренажерный зал",
+        "time": "19:00:00",
+        "action": "Тренировка",
+        "is_pleasant": false,
+        "linked_habit": 2,
+        "periodicity": "every_other_day",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 120,
+        "is_public": false,
+        "created_at": "2026-02-09T21:31:10.474Z",
+        "updated_at": "2026-02-09T21:31:10.474Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "place": "Спальня",
+        "time": "08:30:00",
+        "action": "Спать 3 раза в день",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 45,
+        "is_public": false,
+        "created_at": "2026-02-10T19:55:20.141Z",
+        "updated_at": "2026-02-10T19:55:20.141Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 6,
+    "fields": {
+        "user": 1,
+        "place": "Спальня",
+        "time": "23:22:00",
+        "action": "Просыпаться 3 раза в день",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 45,
+        "is_public": false,
+        "created_at": "2026-02-10T20:21:18.053Z",
+        "updated_at": "2026-02-10T20:21:18.053Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 7,
+    "fields": {
+        "user": 1,
+        "place": "Кухня",
+        "time": "00:17:00",
+        "action": "Готовить щи, раз в сутки",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 120,
+        "is_public": false,
+        "created_at": "2026-02-10T20:29:55.479Z",
+        "updated_at": "2026-02-10T21:16:31.493Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 8,
+    "fields": {
+        "user": 1,
+        "place": "Дом",
+        "time": "20:45:14.286",
+        "action": "Тест Telegram прямо сейчас",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 30,
+        "is_public": false,
+        "created_at": "2026-02-10T20:40:14.293Z",
+        "updated_at": "2026-02-10T20:40:14.293Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 9,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "00:19:00",
+        "action": "Читать книгу",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-10T21:17:52.194Z",
+        "updated_at": "2026-02-10T21:17:52.194Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 10,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "00:40:00",
+        "action": "Читать книгу Лукьяненко",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-10T21:23:26.268Z",
+        "updated_at": "2026-02-10T21:23:26.269Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 11,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "00:50:00",
+        "action": "Читать книгу Лукьяненко",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-10T21:34:03.947Z",
+        "updated_at": "2026-02-10T21:34:03.947Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 12,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "00:54:00",
+        "action": "Читать книгу Лукьяненко 2",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-10T21:43:13.997Z",
+        "updated_at": "2026-02-10T21:43:13.997Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 13,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "20:36:00",
+        "action": "Читать книгу Лукьяненко 3",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-11T17:35:10.176Z",
+        "updated_at": "2026-02-11T17:35:10.176Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 14,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "20:56:00",
+        "action": "Читать книгу Лукьяненко 4",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-11T17:35:42.756Z",
+        "updated_at": "2026-02-11T17:35:42.756Z",
+        "last_completed": null,
+        "streak": 0
+    }
+},
+{
+    "model": "habits.habit",
+    "pk": 15,
+    "fields": {
+        "user": 1,
+        "place": "Дома",
+        "time": "21:56:00",
+        "action": "Читать книгу Лукьяненко 5",
+        "is_pleasant": false,
+        "linked_habit": null,
+        "periodicity": "daily",
+        "specific_days": [],
+        "reward": "",
+        "execution_time": 60,
+        "is_public": false,
+        "created_at": "2026-02-11T18:31:58.431Z",
+        "updated_at": "2026-02-11T18:31:58.431Z",
+        "last_completed": null,
+        "streak": 0
+    }
+}
+]

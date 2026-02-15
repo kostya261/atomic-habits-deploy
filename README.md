@@ -22,24 +22,45 @@
 3. Зависимости указанные в файле: *pyproject.toml*
 ```
 [tool.poetry]
-name = "kursovaya-4-2"
+name = "atomic_habits"
 version = "0.1.0"
 description = ""
-authors = ["Kostya <kos261@hotmail.com>"]
+authors = ["Konstantin <kos26193@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-poetry-core = "^2.2.1"
-django = "^6.0"
-psycopg2 = "^2.9.11"
+django = "^5.0"
+pillow = "^12.1.0"
+djangorestframework = "^3.16.1"
 python-dotenv = "^1.2.1"
+django-filter = "^25.2"
+djangorestframework-simplejwt = "^5.5.1"
+drf-yasg = "^1.21.14"
+stripe = "^14.3.0"
+forex-python = "^1.9.2"
+celery = "^5.6.2"
 redis = "^7.1.0"
+eventlet = "^0.40.4"
+django-celery-beat = "^2.8.1"
+poetry-core = "^2.3.1"
+django-cors-headers = "^4.3.0"
+psycopg2-binary = "^2.9.11"
+psycopg = "^3.3.2"
 
+[tool.poetry.group.lint.dependencies]
+black = "^26.1.0"
+flake8 = "^7.3.0"
+isort = "^7.0.0"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.13.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
 
 ```
 
@@ -56,142 +77,105 @@ build-backend = "poetry.core.masonry.api"
 - **CustomUser** - кастомная модель пользователя
 - Роли: "user" (обычный) и "manager" (менеджер)
 
-## 🔐 Система прав доступа
+## Запуск
+bash
 
-### Для обычных пользователей:
-- Видят только своих получателей, сообщения и рассылки
-- Не могут просматривать данные других пользователей
+### Django сервер
+python manage.py runserver
 
-### Для менеджеров:
-- Полный доступ ко всем данным
-- Могут отключать любые рассылки
-- Просмотр статистики всех пользователей
+### Celery worker (отдельный терминал)
+celery -A config worker -l info --pool=solo
 
-## ⚡ Кеширование
+### Celery beat (отдельный терминал)
+celery -A config beat -l info
 
-### Серверное кеширование (Redis):
-```python
-# Пример кеширования главной страницы
-@cache_control(max_age=300)
-def home(request):
-    total_mailings = cache.get('total_mailings')
-    if not total_mailings:
-        total_mailings = Mailing.objects.count()
-        cache.set('total_mailings', total_mailings, 300)
+## Настройка базы данных
+
+### Создайте базу данных PostgreSQL
+### Настройте .env файл (пример в .env.example)
+### Отредактируйте .env с вашими настройками
+
+### Миграции и суперпользователь
+
+python manage.py migrate
+python manage.py createsuperuser
+
+### Загрузка тестовых данных
+
+python manage.py loaddata users.json
+python manage.py loaddata mailer.json
+
+### Запуск сервера
+
+python manage.py runserver
+
+### Запуск Redis
+
+redis-server
 
 
-📊 Статистика
-Система автоматически собирает статистику:
 
-Общее количество рассылок
+## 📱 Telegram Bot
+Найди бота в Telegram по токену
 
-Активные рассылки
+Отправь /start
+Получи свой chat_id через @userinfobot
 
-Уникальные получатели
+Установи его в профиле:
 
-Успешные/неуспешные отправки
+text
+PUT /api/users/telegram/
+{
+    "telegram_chat_id": "123456789"
+}
+✅ При создании привычки приходит уведомление
+✅ За 10 минут до выполнения — напоминание
 
-Графики по дням
+## 📚 API Документация
+После запуска доступно:
+
+Swagger UI: http://localhost:8000/swagger/
+ReDoc: http://localhost:8000/redoc/
+
+
+## Основные эндпоинты
+
+### Метод	   URL	                        Описание
+   POST	       /api/token/	                 Получить JWT токен
+   POST	       /api/users/register/	         Регистрация
+   GET	       /api/habits/	                 Список привычек
+   POST	       /api/habits/	                 Создать привычку
+   GET	       /api/habits/public/	         Публичные привычки
+   POST	       /api/habits/{id}/complete/	 Отметить выполнение
+   PUT	       /api/users/telegram/	         Установить Telegram ID
 
 
 ## Использование:
 
 git clone <repository-url>
-cd kursovaya_4_2
-
-Настройка базы данных
-
-# Создайте базу данных PostgreSQL
-# Настройте .env файл (пример в .env.example)
-# Отредактируйте .env с вашими настройками
-
-Миграции и суперпользователь
-
-python manage.py migrate
-python manage.py createsuperuser
-
-Загрузка тестовых данных
-
-python manage.py loaddata users.json
-python manage.py loaddata mailer.json
-
-Запуск сервера
-
-python manage.py runserver
-
-Запуск Redis
-
-redis-server
+cd kursovaya_5
 
 
-🎨 Интерфейс
-Основные страницы:
-Главная - общая статистика системы
-
-Получатели - управление списками рассылки
-
-Сообщения - шаблоны писем
-
-Рассылки - создание и управление рассылками
-
-Статистика - детальная аналитика
-
-Панель менеджера - управление всей системой
-
-
-📈 Производительность
-Оптимизации, реализованные в проекте:
-
-Кеширование часто запрашиваемых данных
-
-Оптимизированные SQL-запросы (select_related, prefetch_related)
-
-Пагинация списков
-
-Асинхронная отправка email (готово к реализации)
-
-Индексы в базе данных
-
-
-🔒 Безопасность
-CSRF защита
-
-XSS защита
-
-SQL injection protection
-
-Хеширование паролей (bcrypt)
-
-Сессии с таймаутом
-
-Защита от brute force (готово к реализации)
-
-📚 API (готово к расширению)
-Проект подготовлен для добавления REST API:
-
-Структурированные URL
-
-Сериализаторы в models.py
-
-Готовые View для преобразования
-
-
-
-## Структура проекта
-
-kursovaya_4/
-├── config/ # Настройки проекта
-├── mailer/ # Основное приложение
-│ ├── models.py # Модели данных
-│ ├── views.py # Контроллеры
-│ ├── forms.py # Формы
-│ ├── mixins.py # Миксины для контроля доступа
-│ ├── urls.py # Маршруты
-│ ├── services.py # Бизнес-логика и кеширование
-│ ├── signals.py # Сигналы для обновления статистики
-│ └── templates/ # Шаблоны
-├── users/ # Приложение пользователей
-└── static/ # Статические файлы
+## 📁 Структура проекта
+text
+atomic_habits/
+├── config/              # Настройки проекта
+│   ├── settings.py      # Конфигурация
+│   ├── celery.py        # Celery
+│   └── urls.py          # Корневой роутинг
+├── habits/              # Приложение привычек
+│   ├── models.py        # Модель Habit
+│   ├── serializers.py   # DRF сериализаторы
+│   ├── views.py         # ViewSet'ы
+│   ├── services.py      # Бизнес-логика, Telegram
+│   ├── tasks.py         # Celery задачи
+│   ├── validators.py    # Валидация ТЗ
+│   └── tests.py         # 99% покрытие
+├── users/               # Приложение пользователей
+│   ├── models.py        # Кастомная модель User
+│   ├── serializers.py   # Регистрация, профиль
+│   └── views.py         # Эндпоинты
+└── manage.py
 
 👨‍💻 Автор
 Константин
