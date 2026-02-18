@@ -5,15 +5,18 @@ services:
     image: postgres:15
     env_file:
       - .env
-
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 3s
+      timeout: 3s
       retries: 5
 
 
@@ -34,11 +37,13 @@ services:
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/atomichabits
-      - static_volume:/atomichabits/static
     ports:
       - "8000:8000"
     env_file:
       - .env
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
     depends_on:
       db:
         condition: service_healthy
@@ -52,6 +57,9 @@ services:
       - .:/atomichabits
     env_file:
       - .env
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
     depends_on:
       db:
         condition: service_healthy
@@ -65,6 +73,9 @@ services:
       - .:/atomichabits
     env_file:
       - .env
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
     depends_on:
       db:
         condition: service_healthy
@@ -78,4 +89,3 @@ networks:
 
 volumes:
   postgres_data:
-  static_volume:

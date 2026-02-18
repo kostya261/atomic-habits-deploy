@@ -1,18 +1,16 @@
-FROM python:3.13-slim
+FROM python:3.13-alpine
 
-# Устанавливаем системные зависимости (нужны для psycopg2)
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-WORKDIR /atomichabits
+ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
+    PATH="/app/.venv/bin:$PATH"
 
-# Копируем requirements.txt и устанавливаем зависимости
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir poetry==1.8
 
-# Копируем весь код
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --no-interaction --no-ansi --only main
+
 COPY . .
 
 EXPOSE 8000
