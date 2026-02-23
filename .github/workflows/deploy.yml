@@ -4,7 +4,7 @@ on:
   push:
     branches: [ homework_deploy, develop, main ]
   pull_request:
-    branches: [ homework_deploy ]
+    branches: [ develop ]
 
 jobs:
   test:
