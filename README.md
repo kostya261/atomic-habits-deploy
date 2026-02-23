@@ -1,7 +1,8 @@
-# 🐍 Курсовая 5 Привычки
+# 🐍 Домашняя работа 34_2
 
-Курсовой проект по дисциплине "Программирование на Python". 
+Домашняя работа по дисциплине "Программирование на Python". 
 Веб-приложение для управления привычками.
+Docker Compose
 
 ## 🚀 Основные возможности
 
@@ -17,50 +18,29 @@
 
 
 1. Клонируйте репозиторий:
-   [ссылка](https://github.com/kostya261/Kursovay_4/pull/1)
+   [ссылка](https://github.com/kostya261/kursovaya_5/pull/2)
    
 3. Зависимости указанные в файле: *pyproject.toml*
 ```
 [tool.poetry]
-name = "atomic_habits"
+name = "kursovaya-4-2"
 version = "0.1.0"
 description = ""
-authors = ["Konstantin <kos26193@gmail.com>"]
+authors = ["Kostya <kos261@hotmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-django = "^5.0"
-pillow = "^12.1.0"
-djangorestframework = "^3.16.1"
+poetry-core = "^2.2.1"
+django = "^6.0"
+psycopg2 = "^2.9.11"
 python-dotenv = "^1.2.1"
-django-filter = "^25.2"
-djangorestframework-simplejwt = "^5.5.1"
-drf-yasg = "^1.21.14"
-stripe = "^14.3.0"
-forex-python = "^1.9.2"
-celery = "^5.6.2"
 redis = "^7.1.0"
-eventlet = "^0.40.4"
-django-celery-beat = "^2.8.1"
-poetry-core = "^2.3.1"
-django-cors-headers = "^4.3.0"
-psycopg2-binary = "^2.9.11"
-psycopg = "^3.3.2"
 
-[tool.poetry.group.lint.dependencies]
-black = "^26.1.0"
-flake8 = "^7.3.0"
-isort = "^7.0.0"
-
-[tool.poetry.group.dev.dependencies]
-coverage = "^7.13.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-
 
 ```
 
@@ -77,105 +57,175 @@ build-backend = "poetry.core.masonry.api"
 - **CustomUser** - кастомная модель пользователя
 - Роли: "user" (обычный) и "manager" (менеджер)
 
-## Запуск
-bash
+## 🔐 Система прав доступа
 
-### Django сервер
-python manage.py runserver
+### Для обычных пользователей:
+- Видят только своих получателей, сообщения и рассылки
+- Не могут просматривать данные других пользователей
 
-### Celery worker (отдельный терминал)
-celery -A config worker -l info --pool=solo
+### Для менеджеров:
+- Полный доступ ко всем данным
+- Могут отключать любые рассылки
+- Просмотр статистики всех пользователей
 
-### Celery beat (отдельный терминал)
-celery -A config beat -l info
+## ⚡ Кеширование
 
-## Настройка базы данных
+### Серверное кеширование (Redis):
+```
+python
 
-### Создайте базу данных PostgreSQL
-### Настройте .env файл (пример в .env.example)
-### Отредактируйте .env с вашими настройками
+# Пример кеширования главной страницы
+@cache_control(max_age=300)
+def home(request):
+    total_mailings = cache.get('total_mailings')
+    if not total_mailings:
+        total_mailings = Mailing.objects.count()
+        cache.set('total_mailings', total_mailings, 300)
+```
 
-### Миграции и суперпользователь
+📊 Статистика
+Система автоматически собирает статистику:
 
-python manage.py migrate
-python manage.py createsuperuser
+Общее количество рассылок
 
-### Загрузка тестовых данных
+Активные рассылки
 
-python manage.py loaddata users.json
-python manage.py loaddata mailer.json
+Уникальные получатели
 
-### Запуск сервера
+Успешные/неуспешные отправки
 
-python manage.py runserver
-
-### Запуск Redis
-
-redis-server
-
-
-
-## 📱 Telegram Bot
-Найди бота в Telegram по токену
-
-Отправь /start
-Получи свой chat_id через @userinfobot
-
-Установи его в профиле:
-
-text
-PUT /api/users/telegram/
-{
-    "telegram_chat_id": "123456789"
-}
-✅ При создании привычки приходит уведомление
-✅ За 10 минут до выполнения — напоминание
-
-## 📚 API Документация
-После запуска доступно:
-
-Swagger UI: http://localhost:8000/swagger/
-ReDoc: http://localhost:8000/redoc/
-
-
-## Основные эндпоинты
-
-### Метод	   URL	                        Описание
-   POST	       /api/token/	                 Получить JWT токен
-   POST	       /api/users/register/	         Регистрация
-   GET	       /api/habits/	                 Список привычек
-   POST	       /api/habits/	                 Создать привычку
-   GET	       /api/habits/public/	         Публичные привычки
-   POST	       /api/habits/{id}/complete/	 Отметить выполнение
-   PUT	       /api/users/telegram/	         Установить Telegram ID
+Графики по дням
 
 
 ## Использование:
 
 git clone <repository-url>
-cd kursovaya_5
+cd kursovaya_4_2
+
+Настройка базы данных
+
+# Создайте базу данных PostgreSQL
+# Настройте .env файл (пример в .env.example)
+# Отредактируйте .env с вашими настройками
+
+Миграции и суперпользователь
+
+python manage.py migrate
+python manage.py createsuperuser
+
+Загрузка тестовых данных
+
+python manage.py loaddata users.json
+python manage.py loaddata mailer.json
+
+Запуск сервера
+
+python manage.py runserver
+
+Запуск Redis
+
+redis-server
 
 
-## 📁 Структура проекта
-text
-atomic_habits/
-├── config/              # Настройки проекта
-│   ├── settings.py      # Конфигурация
-│   ├── celery.py        # Celery
-│   └── urls.py          # Корневой роутинг
-├── habits/              # Приложение привычек
-│   ├── models.py        # Модель Habit
-│   ├── serializers.py   # DRF сериализаторы
-│   ├── views.py         # ViewSet'ы
-│   ├── services.py      # Бизнес-логика, Telegram
-│   ├── tasks.py         # Celery задачи
-│   ├── validators.py    # Валидация ТЗ
-│   └── tests.py         # 99% покрытие
-├── users/               # Приложение пользователей
-│   ├── models.py        # Кастомная модель User
-│   ├── serializers.py   # Регистрация, профиль
-│   └── views.py         # Эндпоинты
-└── manage.py
+🎨 Интерфейс
+Основные страницы:
+Главная - общая статистика системы
+
+Получатели - управление списками рассылки
+
+Сообщения - шаблоны писем
+
+Рассылки - создание и управление рассылками
+
+Статистика - детальная аналитика
+
+Панель менеджера - управление всей системой
+
+
+📈 Производительность
+Оптимизации, реализованные в проекте:
+
+Кеширование часто запрашиваемых данных
+
+Оптимизированные SQL-запросы (select_related, prefetch_related)
+
+Пагинация списков
+
+Асинхронная отправка email (готово к реализации)
+
+Индексы в базе данных
+
+
+🔒 Безопасность
+CSRF защита
+
+XSS защита
+
+SQL injection protection
+
+Хеширование паролей (bcrypt)
+
+Сессии с таймаутом
+
+Защита от brute force (готово к реализации)
+
+📚 API (готово к расширению)
+Проект подготовлен для добавления REST API:
+
+Структурированные URL
+
+Сериализаторы в models.py
+
+Готовые View для преобразования
+
+
+
+## Структура проекта
+
+kursovaya_4/
+├── config/ # Настройки проекта
+├── mailer/ # Основное приложение
+│ ├── models.py # Модели данных
+│ ├── views.py # Контроллеры
+│ ├── forms.py # Формы
+│ ├── mixins.py # Миксины для контроля доступа
+│ ├── urls.py # Маршруты
+│ ├── services.py # Бизнес-логика и кеширование
+│ ├── signals.py # Сигналы для обновления статистики
+│ └── templates/ # Шаблоны
+├── users/ # Приложение пользователей
+└── static/ # Статические файлы
+
+
+
+## 🐳 Запуск через Docker
+
+### Требования
+- Установленные Docker и Docker Compose
+
+### Запуск
+1. Скопируйте файл `.env.example` в `.env` и заполните своими данными:
+   ```bash
+   cp .env.example .env
+
+### Запустите контейнеры:
+   
+   docker-compose up -d --build
+
+### Создайте суперпользователя
+
+   docker-compose exec web python manage.py createsuperuser
+
+### Проверка работоспособности
+
+   Django: http://localhost:8000
+   Админка: http://localhost:8000/admin
+   PostgreSQL: docker-compose exec db psql -U postgres -d habits_db -c "\l"
+   Redis: docker-compose exec redis redis-cli ping
+   Celery worker: docker-compose logs celery-worker
+   Celery beat: docker-compose logs celery-beat
+
+
 
 👨‍💻 Автор
 Константин
