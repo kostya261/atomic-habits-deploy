@@ -2,7 +2,7 @@ name: Deploy Atomic Habits
 
 on:
   push:
-    branches: [ homework_deploy, develop, main ]
+    branches: [ itogovoe, develop, main ]
   pull_request:
     branches: [ develop ]
 
@@ -43,7 +43,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/homework_deploy'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/itogovoe'
 
     steps:
       - name: Checkout code
