@@ -1,0 +1,22 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$nXG8LwfguGK3RXsekoGFvt$0EnEejq26QjgBqTOToVUu142+r2CNMnwSdJuWwx4X0c=",
+        "last_login": "2026-02-09T21:50:05Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-02-08T21:21:13Z",
+        "email": "money261@yandex.ru",
+        "telegram_chat_id": "929099436",
+        "timezone": "Europe/Moscow",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

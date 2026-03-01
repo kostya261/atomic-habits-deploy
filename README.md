@@ -1,7 +1,8 @@
-# 🐍 Курсовая 5 Привычки
+# 🐍 Домашняя работа 34_2
 
-Курсовой проект по дисциплине "Программирование на Python". 
+Домашняя работа по дисциплине "Программирование на Python". 
 Веб-приложение для управления привычками.
+Docker Compose
 
 ## 🚀 Основные возможности
 
@@ -17,7 +18,7 @@
 
 
 1. Клонируйте репозиторий:
-   [ссылка](https://github.com/kostya261/Kursovay_4/pull/1)
+   [ссылка](https://github.com/kostya261/kursovaya_5/pull/2)
    
 3. Зависимости указанные в файле: *pyproject.toml*
 ```
@@ -70,7 +71,9 @@ build-backend = "poetry.core.masonry.api"
 ## ⚡ Кеширование
 
 ### Серверное кеширование (Redis):
-```python
+```
+python
+
 # Пример кеширования главной страницы
 @cache_control(max_age=300)
 def home(request):
@@ -78,7 +81,7 @@ def home(request):
     if not total_mailings:
         total_mailings = Mailing.objects.count()
         cache.set('total_mailings', total_mailings, 300)
-
+```
 
 📊 Статистика
 Система автоматически собирает статистику:
@@ -192,6 +195,37 @@ kursovaya_4/
 │ └── templates/ # Шаблоны
 ├── users/ # Приложение пользователей
 └── static/ # Статические файлы
+
+
+
+## 🐳 Запуск через Docker
+
+### Требования
+- Установленные Docker и Docker Compose
+
+### Запуск
+1. Скопируйте файл `.env.example` в `.env` и заполните своими данными:
+   ```bash
+   cp .env.example .env
+
+### Запустите контейнеры:
+   
+   docker-compose up -d --build
+
+### Создайте суперпользователя
+
+   docker-compose exec web python manage.py createsuperuser
+
+### Проверка работоспособности
+
+   Django: http://localhost:8000
+   Админка: http://localhost:8000/admin
+   PostgreSQL: docker-compose exec db psql -U postgres -d habits_db -c "\l"
+   Redis: docker-compose exec redis redis-cli ping
+   Celery worker: docker-compose logs celery-worker
+   Celery beat: docker-compose logs celery-beat
+
+
 
 👨‍💻 Автор
 Константин
