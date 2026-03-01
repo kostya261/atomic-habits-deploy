@@ -217,7 +217,7 @@ class HabitServicesTest(TestCase):
         # habits = HabitService.get_todays_habits(self.user)
 
         # Должна быть хотя бы одна ежедневная привычка
-        #self.assertTrue(len(habits) >= 1)
+        # self.assertTrue(len(habits) >= 1)
 
         # Проверяем сортировку по времени
         # if len(habits) > 1:
