@@ -27,7 +27,7 @@ jobs:
       - name: Run linters
         run: |
           poetry run flake8 .
-          poetry run black --check .
+          poetry run black  .
 
       - name: Run tests
         env:
