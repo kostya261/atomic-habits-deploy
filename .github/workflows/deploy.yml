@@ -24,6 +24,11 @@ jobs:
           pip install poetry
           poetry install --no-root
 
+      - name: Run linters
+        run: |
+          poetry run flake8 .
+          poetry run black --check .
+
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -54,7 +59,7 @@ jobs:
           source: "."
           target: "/home/${{ secrets.SERVER_USER }}/atomic-habits"
 
-      - name: Deploy with Docker Compose
+      - name: Zero-downtime deploy
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -64,22 +69,25 @@ jobs:
           script: |
             cd /home/${{ secrets.SERVER_USER }}/atomic-habits
             
-            # Создаём .env файл из секретов
+            # Удаляем старый .env, создаём новый
+            rm -f .env
             echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
             echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
             echo "DB_USER=${{ secrets.DB_USER }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             echo "DB_HOST=db" >> .env
             echo "DB_PORT=5432" >> .env
+            echo "REDIS_HOST=redis" >> .env
             echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
             echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
             echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
             echo "STRIPE_API_KEY=${{ secrets.STRIPE_API_KEY }}" >> .env
             echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> .env
             
-            # Поднимаем контейнеры
-            sudo docker-compose down
-            sudo docker-compose up -d --build
+            # Zero-downtime деплой
+            sudo docker-compose build
+            sudo docker-compose up -d --no-deps --force-recreate web
+            sudo docker-compose up -d --no-deps --force-recreate celery-worker celery-beat
             
             # Очистка старых образов
             sudo docker image prune -f
