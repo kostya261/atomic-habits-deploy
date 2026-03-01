@@ -212,15 +212,15 @@ class HabitServicesTest(TestCase):
 
     def test_get_todays_habits(self):
         """Тест получения привычек на сегодня"""
-        #from .services import HabitService
+        # from .services import HabitService
 
-        #habits = HabitService.get_todays_habits(self.user)
+        # habits = HabitService.get_todays_habits(self.user)
 
         # Должна быть хотя бы одна ежедневная привычка
         #self.assertTrue(len(habits) >= 1)
 
         # Проверяем сортировку по времени
-        #if len(habits) > 1:
+        # if len(habits) > 1:
         #    self.assertTrue(habits[0].time <= habits[1].time)
         pass
 
@@ -467,10 +467,10 @@ class ViewSetTest(APITestCase):
     def test_today_action(self):
         """Тест действия today у HabitViewSet"""
 
-        #response = self.client.get('/api/habits/today/')
+        # response = self.client.get('/api/habits/today/')
 
-        #self.assertEqual(response.status_code, status.HTTP_200_OK)
-        #self.assertIn('results', response.data)
+        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # self.assertIn('results', response.data)
         pass
 
     def test_public_action(self):
